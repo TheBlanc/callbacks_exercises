@@ -331,11 +331,17 @@ console.log( 'The "big spenders" are:', bigSpenders );
   HINT(S):
   - Transactions don't have 'prices', but their 'items' do!
 */
-var sumSales = 0
 
-transactions[0].items.forEach( function(item) {
-    sumSales += item.price
-  });
+sumSales = 0
+
+for (var i = 0; i < transactions.length; i++) {
+  if (transactions[i].type === 'sale') {
+    transactions[i].items.forEach( function(item) {
+      sumSales += item.price;
+    });
+    break;
+  }
+}
 
 console.log( 'The sum of all sales is:', sumSales );
 
@@ -351,9 +357,17 @@ console.log( 'The sum of all sales is:', sumSales );
   - Make sure to include 'price' information from *all* purchases.
 */
 
-var sumPurchases;
+var sumPurchases = 0;
 
-console.log( 'The sum of all purhcases is:', sumPurchases );
+for (var i = 0; i < transactions.length; i++) {
+  if (transactions[i].type === 'purchase') {
+    transactions[i].items.forEach( function(item) {
+      sumPurchases += item.price;
+    });
+  }
+}
+
+console.log( 'The sum of all purhcases is:',  (sumPurchases * -1).toFixed(2) );
 
 
 // --------------------------------------------------
@@ -369,7 +383,13 @@ console.log( 'The sum of all purhcases is:', sumPurchases );
   HINT(S):
   - Unlike 'QUESTION 08' and 'QUESTION 09', here we're interested in both 'sale' and 'purchase' transactions.
 */
-var netProfit;
+var netProfit = 0;
+
+for (var i = 0; i < transactions.length; i++) {
+    transactions[i].items.forEach( function(item) {
+      netProfit += item.price;
+    });
+}
 
 console.log( 'The net profit is:', netProfit );
 
@@ -383,7 +403,20 @@ console.log( 'The net profit is:', netProfit );
   HINTS:
   - The result of this calculation should be a number (not an array, object, or other data type).
 */
-var mostItems;
+
+
+var maxElementArray;
+
+transactions.forEach( function(element) {
+  var maxElementArrayLength = 0;
+  if (element.items.length > maxElementArrayLength) {
+    maxElementArrayLength = element.items.length;
+    maxElementArray = element.items;
+  }
+});
+
+var mostItems = maxElementArray.length;
+
 
 console.log( 'The most items sold in a single transaction is:', mostItems );
 
@@ -394,6 +427,25 @@ console.log( 'The most items sold in a single transaction is:', mostItems );
 /*
   Calculate the sum of the 'purchase' with the fewest items.
 */
-var sumOfSmallestPurchase;
+
+var minElementArray;
+
+transactions.forEach( function(element) {
+  var minElementArrayLength = transactions[0].items.length
+  if (element.items.length < minElementArrayLength) {
+    minElementArray = element.items;
+  }
+});
+
+var sumOfSmallestPurchase = 0;
+
+minElementArray.forEach( function(element) {
+  sumOfSmallestPurchase += element.price;
+});
+
+
+
+
+
 
 console.log( 'The sum of the smallest purchase is:', sumOfSmallestPurchase );
